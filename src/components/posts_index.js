@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class PostsIndex extends Component {
+  const posts = {}; 
+  
   containerDidMount() {
-    this.props.fetchPosts();
+    posts = this.props.fetchPosts();
   }
   
   render() {
