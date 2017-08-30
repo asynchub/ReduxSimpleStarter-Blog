@@ -14,9 +14,11 @@ class PostsIndex extends Component {
       <h3>Posts</h3>
       <ul>
         _.map(this.props.posts, post => {
-          <li>
+          return (
+            <li>
             {post.title}
-          </li>
+            </li>
+          );
         }
       </ul>
     )  
