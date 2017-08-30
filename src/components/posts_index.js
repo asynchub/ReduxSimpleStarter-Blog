@@ -10,24 +10,22 @@ class PostsIndex extends Component {
   }
   
   renderPosts() {
-    return (
-      <h3>Posts</h3>
-      <ul>
-        _.map(this.props.posts, post => {
-          return (
-            <li>
-            {post.title}
-            </li>
-          );
-        }
-      </ul>
-    )  
+    _.map(this.props.posts, post => {
+      return (
+        <li className="list-group-item" key={post.id}>
+          {post.title}
+        </li>
+      );
+    });
   }  
   
   render() {
     return (
       <div>
-        {this.renderPosts}
+        <h3>Posts</h3>
+        <ul className="list-group">
+          {this.renderPosts}
+        </ul>
       </div>
     );
   }
