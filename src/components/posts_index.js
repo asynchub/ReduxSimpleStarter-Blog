@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class PostsIndex extends Component {
   const posts = {}; 
@@ -8,13 +9,30 @@ class PostsIndex extends Component {
     posts = this.props.fetchPosts();
   }
   
+  renderPosts() {
+    return (
+      <h3>Posts</h3>
+      <ul>
+        _.map(this.props.posts, post => {
+          <li>
+            {post.title}
+          </li>
+        }
+      </ul>
+    )  
+  }  
+  
   render() {
     return (
       <div>
-        PostsIndex
+        {this.renderPosts}
       </div>
     );
   }
 }
 
-export default connect(null, {fetchPosts})(PostsIndex);
+function mapStateToProps(state) {
+  return this.state.posts;
+}
+
+export default connect(mapStateToProps, {fetchPosts})(PostsIndex);
