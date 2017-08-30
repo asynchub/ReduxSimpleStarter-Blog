@@ -18,6 +18,12 @@ class Bye extends Component {
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
+    <BrowserRouter>
+      <div>
+        Header
+        <Route path="hi" component={Hello} />
+        <Route path="byyye" component={Bye} />
+      </div>
+    </BrowserRouter>
   </Provider>
   , document.querySelector('.container'));
