@@ -12,8 +12,8 @@ const url = `${ROOT_URL}/posts${API_KEY}`;
 
 export function fetchPosts() {
   const request = axios.get(url); // ajax request for data objects
-  return (
+  return ({
     type: FETCH_POSTS,
     payload: request
-  );
+  });
 }
