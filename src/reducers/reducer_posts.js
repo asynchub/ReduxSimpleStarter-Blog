@@ -6,7 +6,6 @@ export default function ReducerPosts(state = {}, action) {
     case FETCH_POSTS:
       return _.mapKeys(action.payload.data, 'id');
     default:
-      console.log('in reducer');
       return state;
   }
 }

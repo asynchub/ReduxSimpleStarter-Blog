@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import { fetchPosts } from '../actions/index';
 
 class PostsIndex extends Component {
-  
+
   // the request is asyncronously called by fetchPosts action creator (browser wise)
   // therefore, there is no matter, by whom and when the fetchPosts is called
   // this is chosen react lifecicle method to fetch data upon component been loaded on the page
   // the components will be rerendered again, after fetchPosts payload been passed to state via
   // reducers and this time posts to be shown on the screen
-  containerDidMount() {
+  componentDidMount() {
     this.props.fetchPosts();
   }
 
@@ -19,7 +19,8 @@ class PostsIndex extends Component {
     return _.map(this.props.posts, post => {
       return (
         <li className="list-group-item" key={post.id}>
-          {post.title}
+          <div>Name: {post.title}</div>
+          <div>Category: {post.categories}</div>
         </li>
       );
     });
@@ -44,4 +45,4 @@ function mapStateToProps(state) {
   return { posts: state.posts };
 }
 
-export default connect(mapStateToProps, {fetchPosts})(PostsIndex);
+export default connect(mapStateToProps, {fetchPosts: fetchPosts})(PostsIndex);

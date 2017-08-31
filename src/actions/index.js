@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 // api has been setup to store blogposts
-// going to make ajax requests to api and 
+// going to make ajax requests to api and
 // return them by action creator fetchPosts as a promise in variable request.
 // api has routes configured to fetch, create or delete posts
 
