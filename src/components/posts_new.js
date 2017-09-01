@@ -53,19 +53,19 @@ class PostsNew extends Component {
           type="text"
           {...field.input}
         />
-        {field.meta.error}
+        {field.meta.touched ? field.meta.error : ''}
       </div>
     );
   }
-  
+
   onSubmit(values) {
-    console.log(values);
-  }  
+    console.log(values); // see the object with post values in console
+  }
 
   render() {
     const { handleSubmit } = this.props; // === const handleSubmit = this.props.handleSubmit;
     return (
-      <form onSubmit={this.handleSubmit(this.onSubmit.bind(this))}>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label="Title"
           name="title"
@@ -81,17 +81,17 @@ class PostsNew extends Component {
           name="content"
           component={this.renderField}
         />
-        <button type="submit" className="btn btn-primary">Submit<button>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     );
   }
 }
-// 5 
+// 5
 // submitting and passing data to backend
 // redux-form handles the state of the form: values, validation, events,
 // however, redux-form does not take care of posting form data to back-end server
 // redux-form is not involved in process for back-end
-// it is our job to handle infomation from the form to back-end, or 
+// it is our job to handle infomation from the form to back-end, or
 // to make something other than handling the state, validation, values
 // therefore, onSubmit event handler of form needs to involve some code from redux-form, and
 // some code, that we write ourselves
@@ -100,12 +100,12 @@ class PostsNew extends Component {
 // which is available in this component, because we wired up reduxForm to this PostsNew component -
 // remember, this binding adds tons of additional properties to our component PostsNew
 // then pass handleSubmit(this.onSubmit.bind(this)) to onSubmit in the form element
-// this.onSubmit is the helper function that we define in this component with 
+// this.onSubmit is the helper function that we define in this component with
 // parameter values, like so: onSubmit(values)
 // so, handleSubmit takes a function onSubmit, that is defined by us as a callback.
-// after handleSubmit validates the inputs from the form and 
+// after handleSubmit validates the inputs from the form and
 // successfully completes another redux-part of work, then
-// it calls a callback function: onSubmit, that passes us the values out of the 
+// it calls a callback function: onSubmit, that passes us the values out of the
 // form to work with them further for back-end.
 // .bind(this) is just to bind the callback to execution context of instance of this PostsNew component, where
 // this === component
@@ -113,24 +113,24 @@ class PostsNew extends Component {
 
 // 4
 // validate
-// declare the function validate with values argument, and 
+// declare the function validate with values argument, and
 // hook it up to PostsNew component via property of function argument of reduxForm
 // values argument is the object, that passes the properties of form Fields, declared above
 function validate(values) {
   // create empty object errors here, first:
   const errors = {};
-  
+
   // use if statements to validate inputs and set errors object properties:
   if (!values.title) {
-    errors.title = "Enter a title"; 
+    errors.title = "Enter a title";
   }
   if (!values.categories) {
-    errors.categories = "Enter a category"; 
+    errors.categories = "Enter a category";
   }
   if (!values.content) {
     errors.content = "Enter a content text";
   }
-  
+
   // then return the errors object and it will be handled to form automatically
   // further to show the validation results in the Fields
   return errors;
@@ -140,6 +140,17 @@ function validate(values) {
 // the property meta.error is placed automatically to the field object in renderField helper function:
 // this meta.error property is responsible for handling validation as well
 // to show the error to user on the screen make reference in renderField helper function: {field.meta.error}
+// there is 3 different state properties of form that we need to be aware of for
+// each and every fielsd that we create:
+// pristine: how every single input is rendered by default (when input first renders on the screen)
+// - means no input has touched at yet and user has not selected it yet
+// touched: user has selected or focused an input, and then focused out of the input
+// - means user has done some work on this field and now considers it to be complete
+// notvalid: when there the input is wrong according to validation
+// so, touched state is the right one to show the error message to user
+// for that, make the ternary operator in the renderField helper method:
+// {field.meta.touched ? field.meta.error : ''}
+
 
 // 2
 // wire up reduxForm helper here as would use the connect helper in case of react-redux:
