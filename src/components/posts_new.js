@@ -41,22 +41,29 @@ import { Field, reduxForm } from 'redux-form';
 // when generalizing field, then we can pass arbitrary properties via field argument
 // arbitrary properties will be automatically attached to field argument
 
+import { Link } from 'redux-router-dom';
+
 class PostsNew extends Component {
 
   // helper function to generalize the field
   renderField(field) {
+    const { meta: { touched, error } } = field; // destructuring of chaned properties { touched } === { touched: touched }
+    cpnst className = `form-group ${touched && error ? 'has-danger' : ''}`;
     return (
-      <div className="form-group">
+      <div className={className}>
         <label>{field.label}</label>
         <input
           className="form-control"
           type="text"
           {...field.input}
         />
-        {field.meta.touched ? field.meta.error : ''}
+        <div className="text-help">
+          {touched ? error : ''}
+        </div>
       </div>
     );
   }
+  // apply conditional statemnets inside className declaration
 
   onSubmit(values) {
     console.log(values); // see the object with post values in console
@@ -82,6 +89,7 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <button type="submit" className="btn btn-primary">Submit</button>
+        <Link to="/" className="btn btn-danger">Cancel</Link>
       </form>
     );
   }
