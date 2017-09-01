@@ -48,7 +48,7 @@ class PostsNew extends Component {
   // helper function to generalize the field
   renderField(field) {
     const { meta: { touched, error } } = field; // destructuring of chaned properties { touched } === { touched: touched }
-    cpnst className = `form-group ${touched && error ? 'has-danger' : ''}`;
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`;
     return (
       <div className={className}>
         <label>{field.label}</label>
