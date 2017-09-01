@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { sendPost } from '../actions/index'
 // 1
 // import Field and reduxForm
 import { Field, reduxForm } from 'redux-form';
@@ -41,7 +43,7 @@ import { Field, reduxForm } from 'redux-form';
 // when generalizing field, then we can pass arbitrary properties via field argument
 // arbitrary properties will be automatically attached to field argument
 
-import { Link } from 'redux-router-dom';
+import { Link } from 'react-router-dom';
 
 class PostsNew extends Component {
 
@@ -66,7 +68,21 @@ class PostsNew extends Component {
   // apply conditional statemnets inside className declaration
 
   onSubmit(values) {
-    console.log(values); // see the object with post values in console
+    sendPost(values, () => {
+      this.props.history.push('/');
+    }); // see the object with post values in console
+    // sometimes we need to navigate with callback instead of using Link tag, an UI navigation.
+    // in this case we do not need the link to another set of component, but
+    // need to use programmatic navigation, which will occur after the api request
+    // is complete. therefore, we need to wait until it completes.
+    // in fact, to handle programmatic navigation react-router passes in a big set of
+    // props into our component PostsNew, that is being rendered by a Route (see index.js).
+    // for programmatic navigation we will use this.props.hystory.push('/')
+    // important is to make such navigation after the post has been created.
+    // therefore, pass this as a callback to function, that shall complete api request
+    // before we render the page we navigate to.
+    // make sure, that action creator has a callback as a last argument and calls that
+    // on promise by syntax: promise.then(() => callback());
   }
 
   render() {
@@ -176,4 +192,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate,
   form: 'PostsNewForm'
-})(PostsNew);
+})(
+  connect(null, { sendPost })(PostsNew)
+);

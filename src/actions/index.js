@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const SEND_POST = 'SEND_POST';
 export const FETCH_POSTS = 'FETCH_POSTS';
 // api has been setup to store blogposts
 // going to make ajax requests to api and
@@ -14,6 +15,15 @@ export function fetchPosts() {
   const request = axios.get(url); // ajax request for data objects
   return ({
     type: FETCH_POSTS,
+    payload: request
+  });
+}
+
+export function sendPost(values, callback) {
+  const request = axios.post(url, values)
+  .then(() => callback());
+  return ({
+    type: SEND_POST,
     payload: request
   });
 }
