@@ -57,10 +57,15 @@ class PostsNew extends Component {
       </div>
     );
   }
+  
+  onSubmit(values) {
+    console.log(values);
+  }  
 
   render() {
+    const { handleSubmit } = this.props; // === const handleSubmit = this.props.handleSubmit;
     return (
-      <form>
+      <form onSubmit={this.handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label="Title"
           name="title"
@@ -76,6 +81,7 @@ class PostsNew extends Component {
           name="content"
           component={this.renderField}
         />
+        <button type="submit" className="btn btn-primary">Submit<button>
       </form>
     );
   }
@@ -83,23 +89,24 @@ class PostsNew extends Component {
 // 5 
 // submitting and passing data to backend
 // redux-form handles the state of the form: values, validation, events,
-// however, redux-form does not take care of any posting form data to back-end server
+// however, redux-form does not take care of posting form data to back-end server
 // redux-form is not involved in process for back-end
 // it is our job to handle infomation from the form to back-end, or 
 // to make something other than handling the state, validation, values
 // therefore, onSubmit event handler of form needs to involve some code from redux-form, and
 // some code, that we write ourselves
-// to make it all:
+// to make it work:
 // pull off the property handleSubmit from this.props, like so: const { handleSubmit } = this.props;
 // which is available in this component, because we wired up reduxForm to this PostsNew component -
-// this adds tons of additional properties to our component PostsNew
+// remember, this binding adds tons of additional properties to our component PostsNew
 // then pass handleSubmit(this.onSubmit.bind(this)) to onSubmit in the form element
 // this.onSubmit is the helper function that we define in this component with 
 // parameter values, like so: onSubmit(values)
-// so, handleSubmit takes a function that is defined by us to run the redux-form part of work
+// so, handleSubmit takes a function onSubmit, that is defined by us as a callback.
 // after handleSubmit validates the inputs from the form and 
 // successfully completes another redux-part of work, then
-// it calls a callback function: onSubmit, that passes us the values out of the form to work with.
+// it calls a callback function: onSubmit, that passes us the values out of the 
+// form to work with them further for back-end.
 // .bind(this) is just to bind the callback to execution context of instance of this PostsNew component, where
 // this === component
 
