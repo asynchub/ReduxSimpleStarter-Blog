@@ -53,6 +53,7 @@ class PostsNew extends Component {
           type="text"
           {...field.input}
         />
+        {field.meta.error}
       </div>
     );
   }
@@ -104,7 +105,11 @@ function validate(values) {
   // further to show the validation results in the Fields
   return errors;
 }
-
+// then redux form is responsible for managing the state of the form
+// just make it shown by using JSX on the renderField function via it's field object property
+// the property meta.error is placed automatically to the field object in renderField helper function:
+// this meta.error property is responsible for handling validation as well
+// to show the error to user on the screen make reference in renderField helper function: {field.meta.error}
 
 // 2
 // wire up reduxForm helper here as would use the connect helper in case of react-redux:
