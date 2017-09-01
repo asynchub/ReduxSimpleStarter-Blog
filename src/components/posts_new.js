@@ -80,6 +80,29 @@ class PostsNew extends Component {
     );
   }
 }
+// 5 
+// submitting and passing data to backend
+// redux-form handles the state of the form: values, validation, events,
+// however, redux-form does not take care of any posting form data to back-end server
+// redux-form is not involved in process for back-end
+// it is our job to handle infomation from the form to back-end, or 
+// to make something other than handling the state, validation, values
+// therefore, onSubmit event handler of form needs to involve some code from redux-form, and
+// some code, that we write ourselves
+// to make it all:
+// pull off the property handleSubmit from this.props, like so: const { handleSubmit } = this.props;
+// which is available in this component, because we wired up reduxForm to this PostsNew component -
+// this adds tons of additional properties to our component PostsNew
+// then pass handleSubmit(this.onSubmit.bind(this)) to onSubmit in the form element
+// this.onSubmit is the helper function that we define in this component with 
+// parameter values, like so: onSubmit(values)
+// so, handleSubmit takes a function that is defined by us to run the redux-form part of work
+// after handleSubmit validates the inputs from the form and 
+// successfully completes another redux-part of work, then
+// it calls a callback function: onSubmit, that passes us the values out of the form to work with.
+// .bind(this) is just to bind the callback to execution context of instance of this PostsNew component, where
+// this === component
+
 
 // 4
 // validate
