@@ -80,6 +80,32 @@ class PostsNew extends Component {
   }
 }
 
+// 4
+// validate
+// declare the function validate with values argument, and 
+// hook it up to PostsNew component via property of function argument of reduxForm
+// values argument is the object, that passes the properties of form Fields, declared above
+function validate(values) {
+  // create empty object errors here, first:
+  const errors = {};
+  
+  // use if statements to validate inputs and set errors object properties:
+  if (!values.title) {
+    errors.title = "Enter a title"; 
+  }
+  if (!values.categories) {
+    errors.categories = "Enter a category"; 
+  }
+  if (!values.content) {
+    errors.content = "Enter a content text";
+  }
+  
+  // then return the errors object and it will be handled to form automatically
+  // further to show the validation results in the Fields
+  return errors;
+}
+
+
 // 2
 // wire up reduxForm helper here as would use the connect helper in case of react-redux:
 // attach reduxForm helper to this component:
@@ -92,6 +118,8 @@ class PostsNew extends Component {
 // using the same name of different forms will merge theese forms
 // this name keeps different forms separated from each other
 // just make sure, that the string name of form property is unique.
+// 4: hook validate function up to PostsNew component via property of function argument of reduxForm
 export default reduxForm({
+  validate: validate,
   form: 'PostsNewForm'
 })(PostsNew);
