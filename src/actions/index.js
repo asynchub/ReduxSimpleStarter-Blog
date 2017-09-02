@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const SEND_POST = 'SEND_POST';
 export const FETCH_POSTS = 'FETCH_POSTS';
+export const FETCH_A_POST = 'FETCH_A_POST';
+
 // api has been setup to store blogposts
 // going to make ajax requests to api and
 // return them by action creator fetchPosts as a promise in variable request.
@@ -24,6 +26,14 @@ export function sendPost(values, callback) {
   .then(() => callback());
   return ({
     type: SEND_POST,
+    payload: request
+  });
+}
+
+export function fetchAPost(id) {
+  const request = axios.get(${ROOT_URL}/posts/id${API_KEY});
+  return ({
+    type: FETCH_A_POST,
     payload: request
   });
 }

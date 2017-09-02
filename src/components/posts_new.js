@@ -70,7 +70,9 @@ class PostsNew extends Component {
   onSubmit(values) {
     sendPost(values, () => {
       this.props.history.push('/');
-    }); // see the object with post values in console
+    });
+    // 6
+    // programmatic navigation:
     // sometimes we need to navigate with callback instead of using Link tag, an UI navigation.
     // in this case we do not need the link to another set of component, but
     // need to use programmatic navigation, which will occur after the api request
@@ -111,7 +113,7 @@ class PostsNew extends Component {
   }
 }
 // 5
-// submitting and passing data to backend
+// submitting and passing data to backend:
 // redux-form handles the state of the form: values, validation, events,
 // however, redux-form does not take care of posting form data to back-end server
 // redux-form is not involved in process for back-end
@@ -122,7 +124,7 @@ class PostsNew extends Component {
 // to make it work:
 // pull off the property handleSubmit from this.props, like so: const { handleSubmit } = this.props;
 // which is available in this component, because we wired up reduxForm to this PostsNew component -
-// remember, this binding adds tons of additional properties to our component PostsNew
+// remember, this binding adds tons of additional properties to our component PostsNew.
 // then pass handleSubmit(this.onSubmit.bind(this)) to onSubmit in the form element
 // this.onSubmit is the helper function that we define in this component with
 // parameter values, like so: onSubmit(values)

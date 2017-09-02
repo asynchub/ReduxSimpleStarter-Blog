@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import promise from redux-promise and pass promise to applyMidleware call.
+// promise handles asyncronous nature of the request, that is defined in action
+// creator.
 import promise from 'redux-promise';
 
 // with BrowseRouter, here App is no longer rendering all components, so:
@@ -12,6 +14,7 @@ import promise from 'redux-promise';
 import reducers from './reducers';
 import PostsIndex from './components/posts_index';
 import PostsNew from './components/posts_new';
+import PostsShow from './components/posts_show';
 
 // pass promise here to applyMiddleware call:
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
@@ -22,6 +25,7 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/posts/new" component={PostsNew} />
+          <Route path="/posts/:id" component={PostsShow} />
           <Route path="/" component={PostsIndex} />
         </Switch>
       </div>
