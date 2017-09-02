@@ -1,9 +1,11 @@
 import { FETCH_POSTS } from '../actions/index';
-import { FETCH_A_POST } from '../actions/index';
+import { FETCH_A_POST, DELETE_POST } from '../actions/index';
 import _ from 'lodash';
 
 export default function ReducerPosts(state = {}, action) {
   switch (action.type) {
+    case DELETE_POST:
+      return _.omit(state, [action.payload]);
     case FETCH_A_POST:
       // here we want to add the fetched post to state, because app state should
       // not be destrouyed.

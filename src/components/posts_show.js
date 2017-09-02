@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAPost } from '../actions.index';
-import { Link } from 'redux-router-dom';
+import { fetchAPost, deletePost } from '../actions/index';
+import { Link } from 'react-router-dom';
 
 
 class PostsShow extends Component {
@@ -16,20 +16,34 @@ class PostsShow extends Component {
     this.props.fetchAPost(id);
   }
 
+  onDeleteClick() {
+    const { id } = this.props.match.params;
+
+    this.props.deletePost(id, () => {
+      this.props.history.push('/');
+    });
+  }
+
   render() {
+    // this.posts[this.props.match.params.id];
     const { post } = this.props;
-    
+
     if (!post) {
       return <div>Loading...</div>
     }
-    
+
     return (
-      <Link to="/">Back to posts<Link>
-      
       <div>
+        <Link to="/">Back to posts</Link>
+        <button
+          className="btn btn-danger pull-xs-right"
+          onClick={this.onDeleteClick.bind(this)}
+          >
+          Delete Post
+        </button>
         <h3>Title: {post.title}</h3>
-        <h6>Category: {post.categories}</h6>
-        <p>{post.text}</p>
+        <h4>Category: {post.categories}</h4>
+        <p>{post.content}</p>
       </div>
     );
   }
@@ -39,13 +53,12 @@ class PostsShow extends Component {
 // this component.
 // state argument here is the big lis of posts.
 // with destructuring {} we make it as a variable posts
-// use ownProps, that is cool to access props of this component
+// use ownProps, that is cool to get the props of this component here
 function mapStateToProps({ posts }, ownProps) {
-  // this declares post and assigns it to what is in [] and returns it
-  return { post: [ownProps.match.params.id] };
+  return { post: posts[ownProps.match.params.id] };
 }
 
-export default connect(mapStateToProps, {fetchAPost})(PostsShow);
+export default connect(mapStateToProps, {fetchAPost, deletePost})(PostsShow);
 
 // 1
 // two scenarios here:
